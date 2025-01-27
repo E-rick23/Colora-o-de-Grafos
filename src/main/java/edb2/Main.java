@@ -1,58 +1,68 @@
 package edb2;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main{
-    public static void main(String[] args){
-        // Configura o grafo
-        Grafo grafo = new Grafo(6);
-        grafo.adicionarAresta(0, 1);
-        grafo.adicionarAresta(0, 2);
-        grafo.adicionarAresta(1, 2);
-        grafo.adicionarAresta(1, 3);
-        grafo.adicionarAresta(3, 4);
-        grafo.adicionarAresta(4, 5);
-
-        // Executa o algoritmo de coloração
-        int[] cores = colorirGrafo(grafo);
-
-        // Cria o frame para exibição
-        JFrame frame = new JFrame("Visualização de Coloração de Grafo");
+public class Main {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Coloração de Grafos - Interativo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
+        frame.setSize(600, 600);
+        frame.setLayout(new BorderLayout());
 
+        // Configuração inicial do grafo
+        Grafo grafo = new Grafo(0); // Começa vazio
+        List<Integer> cores = new ArrayList<>(); // Usando lista dinâmica para cores
+
+        // Painel de visualização do grafo
         VisualizadorGrafo painel = new VisualizadorGrafo(grafo, cores);
-        frame.add(painel);
+
+        // Painel de controle
+        JPanel painelControle = new JPanel();
+        painelControle.setLayout(new GridLayout(2, 1));
+
+        // Inputs e botões
+        JPanel painelVertices = new JPanel();
+        JButton btnAdicionarVertice = new JButton("Adicionar Vértice");
+        JButton btnAdicionarAresta = new JButton("Adicionar Aresta");
+        JTextField campoVertice1 = new JTextField(3);
+        JTextField campoVertice2 = new JTextField(3);
+
+        painelVertices.add(new JLabel("Vértice 1:"));
+        painelVertices.add(campoVertice1);
+        painelVertices.add(new JLabel("Vértice 2:"));
+        painelVertices.add(campoVertice2);
+        painelVertices.add(btnAdicionarAresta);
+        painelVertices.add(btnAdicionarVertice);
+
+        painelControle.add(painelVertices);
+
+        // Ações dos botões
+        btnAdicionarVertice.addActionListener(e -> {
+            grafo.adicionarVertice();
+            cores.add(cores.size()); // Adiciona uma nova cor
+            painel.atualizarGrafo(grafo, cores);
+        });
+
+        btnAdicionarAresta.addActionListener(e -> {
+            try {
+                int v1 = Integer.parseInt(campoVertice1.getText());
+                int v2 = Integer.parseInt(campoVertice2.getText());
+                grafo.adicionarAresta(v1, v2);
+                painel.repaint();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Digite números válidos para os vértices.");
+            } catch (IndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(frame, "Os vértices não existem.");
+            }
+        });
+
+        // Adicionar os painéis ao frame
+        frame.add(painel, BorderLayout.CENTER);
+        frame.add(painelControle, BorderLayout.SOUTH);
+
         frame.setVisible(true);
-    }
-
-    public static int[] colorirGrafo(Grafo grafo) {
-        int numVertices = grafo.getVertices();
-        int[] cores = new int[numVertices];
-        boolean[] coresDisponiveis = new boolean[numVertices];
-
-        for (int u = 0; u < numVertices; u++) {
-            // Marca todas as cores como disponíveis
-            for (int i = 0; i < numVertices; i++) {
-                coresDisponiveis[i] = true;
-            }
-
-            // Verifica as cores dos vizinhos
-            for (int vizinho : grafo.getAdjacentes(u)) {
-                if (cores[vizinho] != -1) {
-                    coresDisponiveis[cores[vizinho]] = false;
-                }
-            }
-
-            // Encontra a primeira cor disponível
-            for (int cor = 0; cor < numVertices; cor++) {
-                if (coresDisponiveis[cor]) {
-                    cores[u] = cor;
-                    break;
-                }
-            }
-        }
-
-        return cores;
     }
 }

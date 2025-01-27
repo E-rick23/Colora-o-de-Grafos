@@ -3,8 +3,8 @@ package edb2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Grafo {
-    private int vertices; // Número de vértices
+class Grafo {
+    private int vertices;
     private List<List<Integer>> adjacencia;
 
     public Grafo(int vertices) {
@@ -15,17 +15,24 @@ public class Grafo {
         }
     }
 
-    public void adicionarAresta(int origem, int destino) {
-        adjacencia.get(origem).add(destino);
-        adjacencia.get(destino).add(origem); // Para grafos não direcionados
-    }
-
-    public List<Integer> getAdjacentes(int vertice) {
-        return adjacencia.get(vertice);
+    public void adicionarAresta(int u, int v) {
+        if (!adjacencia.get(u).contains(v)) {
+            adjacencia.get(u).add(v);
+            adjacencia.get(v).add(u); // Para grafo não-direcionado
+        }
     }
 
     public int getVertices() {
         return vertices;
+    }
+
+    public List<Integer> getAdjacentes(int v) {
+        return adjacencia.get(v);
+    }
+
+    public void adicionarVertice() {
+        adjacencia.add(new ArrayList<>());
+        vertices++;
     }
 }
 
