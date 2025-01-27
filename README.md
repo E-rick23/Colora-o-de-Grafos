@@ -19,3 +19,13 @@ O algoritmo guloso **não garante** o uso do númeor mínimo de cores possíveis
 - O grafo for processado em uma ordem desfavorável
 
 - O grafo contiver uma alta densidade de arestas
+
+
+## Como compilar?
+
+- No Linux (ou WSL):
+
+No terminal, na pasta edb2, gere o .jar com o comando: "jar cfm edb2-visualizacao.jar manifest.mf -C out ."
+
+Após isso, execute-o com o comando: java -jar edb2-visualizacao.jar
+
