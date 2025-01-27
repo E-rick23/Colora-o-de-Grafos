@@ -25,7 +25,7 @@ O algoritmo guloso **não garante** o uso do númeor mínimo de cores possíveis
 
 - No Linux (ou WSL):
 
-No terminal, na pasta edb2, gere o .jar com o comando: "jar cfm edb2-visualizacao.jar manifest.mf -C out ."
+No terminal, na pasta edb2, gere o .jar com o comando: _"jar cfm edb2-visualizacao.jar manifest.mf -C out ."_
 
-Após isso, execute-o com o comando: java -jar edb2-visualizacao.jar
+Após isso, execute-o com o comando: _"java -jar edb2-visualizacao.jar_
 
