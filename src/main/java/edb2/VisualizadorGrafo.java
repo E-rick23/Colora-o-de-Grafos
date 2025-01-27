@@ -25,22 +25,27 @@ class VisualizadorGrafo extends JPanel {
         repaint();
     }
 //Função que adiciona e atualiza os vertices e arestas na interface
-    private void calcularPosicoes() {
-        posicoes.clear();
-        int numVertices = grafo.getVertices();
-        int largura = 400; // Largura do painel
-        int altura = 400;  // Altura do painel
-        int centroX = largura / 2;
-        int centroY = altura / 2;
-        int raioCirculo = 150; // Raio do círculo de disposição
+private void calcularPosicoes() {
+    posicoes.clear();
+    int numVertices = grafo.getVertices();
 
-        for (int i = 0; i < numVertices; i++) {
-            double angulo = 2 * Math.PI * i / numVertices;
-            int x = centroX + (int) (raioCirculo * Math.cos(angulo));
-            int y = centroY + (int) (raioCirculo * Math.sin(angulo));
-            posicoes.add(new Point(x, y));
-        }
+    // Obter dimensões do painel
+    int largura = getWidth();  // Largura atual do painel
+    int altura = getHeight(); // Altura atual do painel
+    int centroX = largura / 2;
+    int centroY = altura / 2;
+
+    // Ajustar o raio do círculo para caber na janela
+    int raioCirculo = Math.min(largura, altura) / 3; // O raio será 1/3 do menor lado
+
+    for (int i = 0; i < numVertices; i++) {
+        double angulo = 2 * Math.PI * i / numVertices;
+        int x = centroX + (int) (raioCirculo * Math.cos(angulo));
+        int y = centroY + (int) (raioCirculo * Math.sin(angulo));
+        posicoes.add(new Point(x, y));
     }
+}
+
 
     @Override
     protected void paintComponent(Graphics g) {
