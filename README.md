@@ -20,12 +20,16 @@ O algoritmo guloso **não garante** o uso do númeor mínimo de cores possíveis
 
 - O grafo contiver uma alta densidade de arestas
 
-
 ## Como compilar?
 
-No terminal (Windows/Linux), na pasta edb2, gere o .jar com o comando: _"jar cfm edb2-visualizacao.jar manifest.mf -C out ."_
+### Windows
 
-Após isso, execute-o com o comando: _"java -jar edb2-visualizacao.jar"_
+Gere o .jar com o comando ".\gradlew clean build"
 
-_Ou abra a IDE e execute o Main :)_
+### Linux
 
+Gere o .jar com o comando "./gradlew clean build"
+
+## Como executar?
+
+Após gerar o .jar, ele será enviado a pasta build/libs, basta executar o arquivo :D 
