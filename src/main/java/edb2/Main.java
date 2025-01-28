@@ -42,8 +42,8 @@ public class Main {
         // Ações dos botões
         btnAdicionarVertice.addActionListener(e -> {
             grafo.adicionarVertice();
-            cores.add(cores.size()); // Adiciona uma nova cor
-            painel.atualizarGrafo(grafo, cores);
+            List<Integer> novasCores = grafo.colorirGrafo();
+            painel.atualizarGrafo(grafo, novasCores);
         });
 
         btnAdicionarAresta.addActionListener(e -> {
@@ -51,13 +51,15 @@ public class Main {
                 int v1 = Integer.parseInt(campoVertice1.getText());
                 int v2 = Integer.parseInt(campoVertice2.getText());
                 grafo.adicionarAresta(v1, v2);
-                painel.repaint();
+                List<Integer> novasCores = grafo.colorirGrafo();
+                painel.atualizarGrafo(grafo, novasCores);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(frame, "Digite números válidos para os vértices.");
             } catch (IndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(frame, "Os vértices não existem.");
             }
         });
+
 
         // Adicionar os painéis ao frame
         frame.add(painel, BorderLayout.CENTER);
