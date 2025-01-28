@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'application' // Para especificar o ponto de entrada
+}
+
+group = 'ism'
+version = '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'edb2.Main' // Classe principal com o método `public static void main`
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass.get(), // Define o ponto de entrada do JAR
+        )
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE // Evita conflitos ao criar o jar
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
